@@ -1,6 +1,9 @@
 body {
-  background-color: aliceblue;
   text-align: center;
+}
+
+body .bg-dark-purple{
+  background-color: #232129;
 }
 
 /*# sourceMappingURL=home.css.map */
