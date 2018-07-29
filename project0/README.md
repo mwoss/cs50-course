@@ -3,6 +3,7 @@
 Web Programming with Python and JavaScript    
 First project from cs50 course- static pages containing information about popular programming languages in year 2018  
 Used technologies:  HTML, CSS, SASS, Bootstrap  
+Home page: home.html  
     
   
 ###### Exercise requirements:
