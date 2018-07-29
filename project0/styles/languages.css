@@ -4695,13 +4695,6 @@ readers do not read off random characters that represent icons */
 }
 
 body {
-  text-align: center;
-}
-body .bg-dark-purple {
-  background-color: #232129;
-}
-
-body {
   background-color: #393948;
 }
 body h1 {
@@ -4717,6 +4710,11 @@ body h1 {
 body h3 {
   color: #e4e4e4;
   margin-bottom: 20px;
+  margin-top: 50px;
+  text-align: center;
+}
+body .bg-dark-purple {
+  background-color: #232129;
 }
 body #lang-info {
   margin-top: 35px;
@@ -4739,17 +4737,19 @@ body #lang-info #lang-header .lang-logo img {
 }
 body #lang-info #lang-header .init-text {
   color: #ffffff;
-  float: left;
+  text-align: justify;
 }
 body #lang-info .vertical-align {
   display: flex;
   align-items: center;
 }
-body #lang-info .normal-text {
+body #lang-info .text {
   color: #e4e4e4;
+  text-align: justify;
 }
 body #lang-info tbody {
   color: #e4e4e4;
+  text-align: center;
 }
 body #lang-info tbody td:first-child {
   font-weight: bold;
@@ -4773,7 +4773,7 @@ body #lang-info tbody td:first-child {
   margin-right: 5px;
 }
 .lang-brand:hover {
-  color: #dee4fa !important;
+  color: #e4e4e4 !important;
 }
 
 /*# sourceMappingURL=languages.css.map */

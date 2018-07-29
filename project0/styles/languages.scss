@@ -1,12 +1,12 @@
 @import "fontawesome-scss/fontawesome";
 @import "fontawesome-scss/solid";
-@import 'home.scss';
+@import 'consts';
 
 body {
-  background-color: #393948;
+  background-color: $bg-color;
 
   h1 {
-    color: #ffffff;
+    color: $init-text-color;
     font-family: 'Raleway', sans-serif;
     font-size: 62px;
     font-weight: 800;
@@ -17,13 +17,19 @@ body {
   }
 
   h3 {
-    color: #e4e4e4;
+    color: $important-color;
     margin-bottom: 20px;
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  .bg-dark-purple {
+    background-color: $nav-lang-color;
   }
 
   #lang-info {
     margin-top: 35px;
-    background-color: #302e3b;
+    background-color: $lang-info-color;
     -webkit-box-shadow: 0px 10px 41px -3px rgba(33, 33, 33, 1);
     -moz-box-shadow: 0px 0px 41px -3px rgba(33, 33, 33, 1);
     box-shadow: 0px 0px 41px -3px rgba(33, 33, 33, 1);
@@ -37,13 +43,13 @@ body {
         float: left;
 
         img {
-          width: 230px;
-          height: 230px;
+          width: $img-width;
+          height: $img-height;
         }
       }
       .init-text {
-        color: #ffffff;
-        float: left;
+        color: $init-text-color;
+        text-align: justify;
       }
     }
 
@@ -52,12 +58,14 @@ body {
       align-items: center;
     }
 
-    .normal-text {
-      color: #e4e4e4;
+    .text {
+      color: $important-color;
+      text-align: justify;
     }
 
     tbody {
-      color: #e4e4e4;
+      color: $important-color;
+      text-align: center;
 
       td:first-child {
         font-weight: bold;
@@ -80,6 +88,6 @@ body {
   }
 
   &:hover {
-    color: #dee4fa !important;
+    color: $important-color !important;
   }
 }

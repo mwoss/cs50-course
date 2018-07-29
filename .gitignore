@@ -53,3 +53,7 @@ fabric.properties
 # Editor-based Rest Client
 .idea/httpRequests
 
+### Sass template
+.sass-cache/
+*.css.map
+

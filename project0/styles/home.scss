@@ -1,9 +1,49 @@
-body{
-  text-align: center;
+@import "consts";
 
-  .bg-dark-purple{
-    background-color: #232129;
+html, body {
+  height: 100%;
+  background-color: $bg-color;
+}
+
+body {
+  display: -ms-flexbox;
+  display: flex;
+  color: #fff;
+  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+
+  a, a:hover, a:focus {
+    color: $important-color;
+  }
+
+  .cover-container {
+    max-width: 42em;
+  }
+
+  .masthead {
+    margin-bottom: 2rem;
+
+    .masthead-brand {
+      margin-bottom: 0;
+    }
+
+  }
+
+  .cover {
+    padding: 0 1.5rem;
+  }
+
+  .mastfoot {
+    color: rgba(255, 255, 255, .5);
   }
 
 }
 
+@media (min-width: 48em) {
+  .masthead-brand {
+    float: left;
+  }
+  .nav-masthead {
+    float: right;
+  }
+}
