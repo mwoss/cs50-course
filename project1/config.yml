@@ -1,4 +1,4 @@
-posgresql:
+postgresql:
   host: ec2-54-247-98-162.eu-west-1.compute.amazonaws.com
   port: 5432
   database: d3bg7svigcvfu9

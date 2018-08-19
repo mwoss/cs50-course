@@ -4,7 +4,7 @@ create table books
   id               serial       not null
     constraint books_pkey
     primary key,
-  isbn             integer      not null,
+  isbn             varchar(13)  not null,
   author           varchar(200),
   title            varchar(200) not null,
   publication_year integer
@@ -22,7 +22,7 @@ create table reviews
   id        serial        not null
     constraint reviews_pkey
     primary key,
-  book_isbn integer       not null
+  book_isbn varchar(13)   not null
     constraint fk_book_isbn
     references books (isbn),
   rating    integer       not null,
