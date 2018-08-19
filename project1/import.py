@@ -1,9 +1,8 @@
 import logging
 from argparse import ArgumentParser
-from csv import DictReader, Error
+from csv import Error
 from psycopg2 import DatabaseError, DataError
-from psycopg2.extras import execute_values
-from book_review.utils.connection import PostgresConnection, INSERT_QUERIES
+from book_review.utils.connection import PostgresConnection
 
 logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
 

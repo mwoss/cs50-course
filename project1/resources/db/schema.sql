@@ -55,3 +55,9 @@ create unique index users_nick_uindex
 create unique index users_email_uindex
   on users (email);
 
+
+ALTER TABLE public.reviews ADD reviwer int NOT NULL;
+CREATE UNIQUE INDEX reviews_reviwer_uindex ON public.reviews (reviwer);
+ALTER TABLE public.reviews
+ADD CONSTRAINT fk_user_id
+FOREIGN KEY (reviwer) REFERENCES public.users (user_id);

@@ -1,0 +1,52 @@
+html, body {
+  height: 100%;
+  background-color: #393948;
+}
+
+body {
+  display: -ms-flexbox;
+  display: flex;
+  color: #fff;
+  text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
+}
+body a, body a:hover, body a:focus {
+  color: #e4e4e4;
+}
+body .cover-container {
+  max-width: 42em;
+}
+body .nav-masthead .nav-link {
+  padding: 0.25rem 0;
+  font-weight: 500;
+}
+body .nav-masthead .nav-link + .nav-link {
+  margin-left: 1rem;
+}
+body .masthead {
+  margin-bottom: 2rem;
+}
+body .masthead .masthead-brand {
+  margin-bottom: 0;
+}
+body .cover {
+  padding: 0 1.5rem;
+}
+body .cover-container {
+  max-width: 50em;
+}
+body .mastfoot {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media (min-width: 48em) {
+  .masthead-brand {
+    float: left;
+  }
+
+  .nav-masthead {
+    float: right;
+  }
+}
+
+/*# sourceMappingURL=layout.css.map */
