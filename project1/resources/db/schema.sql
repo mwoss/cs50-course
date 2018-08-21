@@ -60,4 +60,4 @@ ALTER TABLE public.reviews ADD reviwer int NOT NULL;
 CREATE UNIQUE INDEX reviews_reviwer_uindex ON public.reviews (reviwer);
 ALTER TABLE public.reviews
 ADD CONSTRAINT fk_user_id
-FOREIGN KEY (reviwer) REFERENCES public.users (user_id);
+FOREIGN KEY (reviewer) REFERENCES public.users (user_id);

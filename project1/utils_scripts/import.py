@@ -2,7 +2,7 @@ import logging
 from argparse import ArgumentParser
 from csv import Error
 from psycopg2 import DatabaseError, DataError
-from book_review.utils.connection import PostgresConnection
+from connection import PostgresConnection
 
 logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
 

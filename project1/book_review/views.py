@@ -1,7 +1,8 @@
-from flask import render_template, redirect, url_for, g
-from flask_login import current_user, logout_user, login_required
+from flask import render_template, redirect, request, url_for, g, flash
+from flask_login import current_user, logout_user, login_required, login_user
 
-from book_review import app, lm
+from book_review import app, lm, db
+from .models import User
 
 
 @app.route('/')
@@ -9,14 +10,30 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/login')
+# TODO: hash password
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    pass
+    if request.method == 'GET':
+        return render_template('login.html')
+    username = request.form['username']
+    password = request.form['password']
+    registered_user = User.query.filter_by(nick=username, password=password)
+
+    if registered_user is None:
+        flash('Username or Password is invalid', 'error')
+        return redirect(url_for('login'))
+    login_user(registered_user)
+    return redirect(request.args.get('next') or url_for('home'))
 
 
-@app.route('/register')
+@app.route('/register', methods=['GET, POST'])
 def register():
-    pass
+    if request.method == 'GET':
+        return render_template('register.html')
+    user = User(request.form['username'], request.form['password'], request.form['email'])
+    db.session.add(user)
+    db.session.commit()
+    return redirect(url_for('login'))
 
 
 @app.route('/logout')
@@ -35,6 +52,11 @@ def search():
 @login_required
 def book_info(isbn: int):
     pass
+
+
+@lm.user_loader
+def load_user(id: str):
+    return User.query.get(int(id))
 
 
 @app.before_request

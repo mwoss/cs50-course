@@ -1,9 +1,0 @@
-postgresql:
-  host: ec2-54-247-98-162.eu-west-1.compute.amazonaws.com
-  port: 5432
-  database: d3bg7svigcvfu9
-  user: wiqpliigodneab
-  password: 11c4aa1524ee422d9b04c970095233d5188880689b03c79480763518e9acd22a
-goodreads:
-  key: 1qwurMZhALuIv9amyXAg
-  secret: vYdy1rcWwelr78QfBT2AtTRocWtKwZPYyIvrzIv2vo8

@@ -3,6 +3,9 @@
 Harvard's CS50 - Web Programming with Python and JavaScript.  
 Second project from cs50 course - book review website.
 
+I've bent project's requirements a little bit. Yes, I' ve used ORM(but some things are done with pure SQL), because I am familiar with SQL and i want to lear Flask and its extensions more.   
+Additional and not necessary library used for import script - psycopg2 it also used only for learning purpose :) 
+
 ###### Overview:
 ```angular2html
 In this project, you’ll build a book review website. 
