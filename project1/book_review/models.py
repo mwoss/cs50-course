@@ -1,3 +1,5 @@
+from werkzeug.security import check_password_hash
+
 from book_review import db
 
 
@@ -26,6 +28,9 @@ class User(db.Model):
 
     def get_id(self):
         return str(self.id)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
 
     def __repr__(self):
         return f'<User {self.username}>'

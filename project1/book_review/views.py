@@ -1,5 +1,6 @@
 from flask import render_template, redirect, request, url_for, g, flash
 from flask_login import current_user, logout_user, login_required, login_user
+from werkzeug.security import generate_password_hash as hash
 
 from book_review import app, lm, db
 from .models import User
@@ -15,13 +16,12 @@ def home():
 def login():
     if request.method == 'GET':
         return render_template('login.html')
-    username = request.form['username']
-    password = request.form['password']
-    registered_user = User.query.filter_by(nick=username, password=password)
 
-    if registered_user is None:
+    registered_user = User.query.filter_by(nick=request.form['username'])
+    if registered_user is None or registered_user.check_password(request.form['password']):
         flash('Username or Password is invalid', 'error')
         return redirect(url_for('login'))
+
     login_user(registered_user)
     return redirect(request.args.get('next') or url_for('home'))
 
@@ -30,7 +30,7 @@ def login():
 def register():
     if request.method == 'GET':
         return render_template('register.html')
-    user = User(request.form['username'], request.form['password'], request.form['email'])
+    user = User(request.form['username'], hash(request.form['password']), request.form['email'])
     db.session.add(user)
     db.session.commit()
     return redirect(url_for('login'))
