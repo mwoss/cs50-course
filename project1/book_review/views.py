@@ -1,9 +1,9 @@
 from flask import render_template, redirect, request, url_for, g, flash
 from flask_login import current_user, logout_user, login_required, login_user
-from werkzeug.security import generate_password_hash as hash
+from werkzeug.security import generate_password_hash as hash_pswd
 
 from book_review import app, lm, db
-from .models import User
+from .models import Users
 
 
 @app.route('/')
@@ -11,26 +11,26 @@ def home():
     return render_template('home.html')
 
 
-# TODO: hash password
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
 
-    registered_user = User.query.filter_by(nick=request.form['username'])
-    if registered_user is None or registered_user.check_password(request.form['password']):
+    user = Users.query.filter_by(nick=request.form['username']).first()
+    if user is None or user.check_password(request.form['password']):
         flash('Username or Password is invalid', 'error')
         return redirect(url_for('login'))
 
-    login_user(registered_user)
+    login_user(user)
     return redirect(request.args.get('next') or url_for('home'))
 
 
-@app.route('/register', methods=['GET, POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
         return render_template('register.html')
-    user = User(request.form['username'], hash(request.form['password']), request.form['email'])
+
+    user = Users(request.form['username'], hash_pswd(request.form['password']), request.form['email'])
     db.session.add(user)
     db.session.commit()
     return redirect(url_for('login'))
@@ -56,7 +56,7 @@ def book_info(isbn: int):
 
 @lm.user_loader
 def load_user(id: str):
-    return User.query.get(int(id))
+    return Users.query.get(int(id))
 
 
 @app.before_request
