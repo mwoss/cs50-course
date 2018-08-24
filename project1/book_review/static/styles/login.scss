@@ -1,0 +1,64 @@
+@import "consts";
+
+.login {
+  margin: 20px auto;
+  width: 440px;
+
+  .login-screen {
+    background-color: #bbbbbb;
+    padding: 20px;
+    border-radius: 5px;
+
+    .login-form {
+      text-align: center;
+
+      .form-group {
+        margin-bottom: 10px;
+
+        input {
+          text-align: center;
+          background-color: #ECF0F1;
+          border: 2px solid transparent;
+          border-radius: 3px;
+          font-size: 16px;
+          font-weight: 200;
+          padding: 10px 0;
+          margin-right: 20px;
+          width: 400px;
+          transition: border .5s;
+
+          &:focus {
+            border: 2px solid #444c6c;
+            box-shadow: none;
+          }
+        }
+      }
+      .btn {
+        border: 2px solid transparent;
+        background: #584a9f;
+        color: #ffffff;
+        font-size: 16px;
+        line-height: 25px;
+        padding: 10px 0;
+        text-decoration: none;
+        text-shadow: none;
+        border-radius: 3px;
+        box-shadow: none;
+        transition: 0.25s;
+        display: block;
+        width: 250px;
+        margin: 30px auto 0 auto;
+
+        &:hover{
+          background: #3c336d;
+        }
+      }
+    }
+  }
+
+  .app-title {
+    color: $init-text-color;
+    margin-bottom: 20px;
+  }
+}
+

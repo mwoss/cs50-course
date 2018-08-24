@@ -43,7 +43,7 @@ create table users
     primary key,
   nick     varchar(30) not null,
   email    varchar(50) not null,
-  password char(64)    not null
+  password char(100)    not null
 );
 
 create unique index users_user_id_uindex

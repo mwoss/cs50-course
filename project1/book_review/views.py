@@ -1,5 +1,6 @@
 from flask import render_template, redirect, request, url_for, g, flash
 from flask_login import current_user, logout_user, login_required, login_user
+from sqlalchemy.exc import DatabaseError
 from werkzeug.security import generate_password_hash as hash_pswd
 
 from book_review import app, lm, db
@@ -22,7 +23,7 @@ def login():
         return redirect(url_for('login'))
 
     login_user(user)
-    return redirect(request.args.get('next') or url_for('home'))
+    return redirect(request.args.get('next') or url_for('search'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -30,9 +31,13 @@ def register():
     if request.method == 'GET':
         return render_template('register.html')
 
-    user = Users(request.form['username'], hash_pswd(request.form['password']), request.form['email'])
-    db.session.add(user)
-    db.session.commit()
+    try:
+        user = Users(request.form['username'], hash_pswd(request.form['password']), request.form['email'])
+        db.session.add(user)
+        db.session.commit()
+    except DatabaseError:
+        flash("Ups something bad happened :< Sorry")
+
     return redirect(url_for('login'))
 
 

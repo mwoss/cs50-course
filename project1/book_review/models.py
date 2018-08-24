@@ -27,7 +27,7 @@ class Users(db.Model):
         return False
 
     def get_id(self):
-        return str(self.id)
+        return str(self.user_id)
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
