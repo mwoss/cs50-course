@@ -1,0 +1,8 @@
+{% macro render_bootstrap_field(field) %}
+    {% set text = field.label.text %}
+    {% set placeholder = "Enter " + field.label.text %}
+    <div class="form-group">
+        <input type="text" class="form-control" id='{{ text }}' name='{{ text }}'
+               placeholder='{{ placeholder }}' required>
+    </div>
+{% endmacro %}
