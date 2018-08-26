@@ -1,10 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<link rel="stylesheet" href="../static/styles/books.css" type="text/css">
 
-</body>
-</html>
+{% extends "layout.html" %}
+
+{% block main %}
+{% if book %}
+<h3>{{ book.title }}</h3>
+<div class="book-info">
+    <p>Book isbn: {{ book.isbn }}</p>
+    <p>Author: {{ book.author }}</p>
+    <p>Publication year: {{ book.publication_year }}</p>
+</div>
+<form action="{{ url_for('book_info', isbn=book.isbn) }}" method="post">
+    <div class="review-form">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            <input type="text" class="form-control" id="new-review" name="new-review"
+                   placeholder="Give this book a review" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+<div class="reviews">
+    {% for review in reviews %}
+        <b>User {{ review.reviewer }} review:</b>
+        {{ review.review }}
+    {% endfor %}
+</div>
+{% else %}
+<h4>Ups I guess we don't have this book in our system :<</h4>
+{% endif %}
+{% endblock %}

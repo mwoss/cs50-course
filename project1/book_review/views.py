@@ -4,8 +4,9 @@ from sqlalchemy.exc import DatabaseError
 from werkzeug.security import generate_password_hash as hash_pswd
 
 from book_review import app, lm, db
-from book_review.forms import LoginForm, RegisterForm
-from .models import Users
+from book_review.forms import LoginForm, RegisterForm, ReviewForm
+from book_review.models import Reviews
+from .models import Users, Books
 
 
 @app.route('/')
@@ -20,13 +21,14 @@ def login():
 
     form = LoginForm(request.form)
     if form.validate_on_submit():
-        user = Users.query.filter_by(nick=request.form['username']).first()
-        if user is None or user.check_password(request.form['password']):
+        print(form.username.data)
+        user = Users.query.filter_by(nick=form.username.data).first()
+        if user is None or user.check_password(form.password.data):
             flash('Username or Password is invalid', 'error')
             return redirect(url_for('login'))
 
         login_user(user)
-        return redirect(request.args.get('next') or url_for('search'))
+        return redirect(request.args.get('next') or url_for('home'))
 
     return render_template('login.html', form=form)
 
@@ -39,7 +41,7 @@ def register():
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         try:
-            user = Users(request.form['username'], hash_pswd(request.form['password']), request.form['email'])
+            user = Users(form.username.data, hash_pswd(form.password.data), form.email.data)
             db.session.add(user)
             db.session.commit()
         except DatabaseError:
@@ -65,7 +67,11 @@ def search():
 @app.route('/book/<string:isbn>', methods=['GET', 'POST'])
 @login_required
 def book_info(isbn: int):
-    pass
+    form = ReviewForm(request.form)
+    book = Books.query.filter_by(isbn=isbn).first()
+    reviews = Reviews.query.filter_by(book_isbn=isbn).all()
+
+    return render_template('book.html', book=book, reviews=reviews, form=form)
 
 
 @lm.user_loader

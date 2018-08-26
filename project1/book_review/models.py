@@ -56,7 +56,7 @@ class Reviews(db.Model):
 class Books(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
     isbn = db.Column('isbn', db.String(13), unique=True, index=True, nullable=False)
-    author = db.Column('rating', db.String(200))
+    author = db.Column('author', db.String(200))
     title = db.Column('title', db.String(200), nullable=False)
     publication_year = db.Column('publication_year', db.Integer)
 
