@@ -1,6 +1,6 @@
 from flask import render_template, redirect, request, url_for, g, flash
 from flask_login import current_user, logout_user, login_required, login_user
-from sqlalchemy.exc import DatabaseError
+from sqlalchemy.exc import DatabaseError, IntegrityError
 from werkzeug.security import generate_password_hash as hash_pswd
 
 from book_review import app, lm, db
@@ -21,7 +21,6 @@ def login():
 
     form = LoginForm(request.form)
     if form.validate_on_submit():
-        print(form.username.data)
         user = Users.query.filter_by(nick=form.username.data).first()
         if user is None or user.check_password(form.password.data):
             flash('Username or Password is invalid', 'error')
@@ -41,7 +40,7 @@ def register():
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         try:
-            user = Users(form.username.data, hash_pswd(form.password.data), form.email.data)
+            user = Users(nick=form.username.data, password=hash_pswd(form.password.data), email=form.email.data)
             db.session.add(user)
             db.session.commit()
         except DatabaseError:
@@ -68,6 +67,22 @@ def search():
 @login_required
 def book_info(isbn: int):
     form = ReviewForm(request.form)
+    flash("Sorry, but you can write 1 comment per book")
+    print("XD")
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            try:
+                review = Reviews(book_isbn=isbn, rating=form.rating.data, review=form.review.data,
+                                 reviewer=current_user.user_id)
+                db.session.add(review)
+                db.session.commit()
+            except IntegrityError:
+                print("ASDASD")
+                db.session.rollback()
+                flash("Sorry, but you can write 1 comment per book")
+            except DatabaseError:
+                flash("Ups our database have bad mood today :< Sorry")
+
     book = Books.query.filter_by(isbn=isbn).first()
     reviews = Reviews.query.filter_by(book_isbn=isbn).all()
 

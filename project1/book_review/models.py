@@ -33,7 +33,7 @@ class Users(db.Model):
         return check_password_hash(self.password, password)
 
     def __repr__(self):
-        return f'<User {self.username}>'
+        return f'<User {self.nick}>'
 
 
 class Reviews(db.Model):

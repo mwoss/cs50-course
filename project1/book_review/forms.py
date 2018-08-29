@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms import StringField, TextAreaField, IntegerField
+from wtforms.validators import DataRequired, Email, Length, NumberRange
 
 
 class RegisterForm(FlaskForm):
@@ -16,3 +16,4 @@ class LoginForm(FlaskForm):
 
 class ReviewForm(FlaskForm):
     review = TextAreaField('review', validators=[DataRequired(), Length(min=1, max=2000)])
+    rating = IntegerField('rating', validators=[DataRequired(), NumberRange(min=1, max=5)])
