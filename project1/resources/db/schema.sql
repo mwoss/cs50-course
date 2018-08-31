@@ -22,9 +22,7 @@ create table reviews
   id        serial        not null
     constraint reviews_pkey
     primary key,
-  book_isbn varchar(13)   not null
-    constraint fk_book_isbn
-    references books (isbn),
+  book_isbn varchar(13)   not null,
   rating    integer       not null,
   review    varchar(2000) not null
 );
@@ -32,8 +30,6 @@ create table reviews
 create unique index reviews_id_uindex
   on reviews (id);
 
-create unique index reviews_book_isbn_uindex
-  on reviews (book_isbn);
 
 -- USER TABLE
 create table users
@@ -56,8 +52,8 @@ create unique index users_email_uindex
   on users (email);
 
 
-ALTER TABLE public.reviews ADD reviwer int NOT NULL;
+ALTER TABLE public.reviews ADD reviwer VARCHAR(30) NOT NULL;
 CREATE UNIQUE INDEX reviews_reviwer_uindex ON public.reviews (reviwer);
 ALTER TABLE public.reviews
 ADD CONSTRAINT fk_user_id
-FOREIGN KEY (reviewer) REFERENCES public.users (user_id);
+FOREIGN KEY (reviewer) REFERENCES public.users (nick);

@@ -67,17 +67,15 @@ def search():
 @login_required
 def book_info(isbn: int):
     form = ReviewForm(request.form)
-    flash("Sorry, but you can write 1 comment per book")
-    print("XD")
+
     if request.method == 'POST':
         if form.validate_on_submit():
             try:
                 review = Reviews(book_isbn=isbn, rating=form.rating.data, review=form.review.data,
-                                 reviewer=current_user.user_id)
+                                 reviewer=current_user.nick)
                 db.session.add(review)
                 db.session.commit()
             except IntegrityError:
-                print("ASDASD")
                 db.session.rollback()
                 flash("Sorry, but you can write 1 comment per book")
             except DatabaseError:
