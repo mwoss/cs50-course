@@ -6,3 +6,11 @@
                placeholder='{{ placeholder }}' required>
     </div>
 {% endmacro %}
+
+{% macro render_search_field(field) %}
+    {% set text = field.label.text %}
+    <div class="form-group">
+        <input type="text" class="form-control" id='{{ text }}' name='{{ text }}'
+               placeholder='Find book by title or isbn'>
+    </div>
+{% endmacro %}

@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <h5>Search result for query: {{ query }}</h5>
+    {% from "_search_res.html" import book_anchor %}
+    {% for book in result %}
+        {{ book_anchor(book) }}
+    {% endfor %}
+
+    <div class="next-prev">
+        {% if result.has_prev %}
+            <a href="{{ url_for('search_result', query=query, page=result.prev_num) }}">
+                &lt;&lt; Newer posts
+            </a>
+        {% else %}
+            &lt;&lt; Newer posts
+        {% endif %} |
+        {% if result.has_next %}
+            <a href="{{ url_for('search_result', query=query, page=posts.next_num) }}">
+                Older posts &gt;&gt;
+            </a>
+        {% else %}
+            Older posts &gt;&gt;
+        {% endif %}
+    </div>
+{% endblock %}

@@ -68,3 +68,14 @@ class Books(db.Model):
 
     def __repr__(self):
         return f'<Book: {self.title}, isbn:{self.isbn}>'
+
+    @staticmethod
+    def get_as_dict(isbn: str):
+        book: Books = Books.query.filter_by(isbn=isbn).first()
+
+        return {
+            'isbn': book.isbn,
+            'author': book.author,
+            'title': book.title,
+            'publication_year': book.publication_year
+        }

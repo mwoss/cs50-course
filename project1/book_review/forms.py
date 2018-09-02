@@ -17,3 +17,7 @@ class LoginForm(FlaskForm):
 class ReviewForm(FlaskForm):
     review = TextAreaField('review', validators=[DataRequired(), Length(min=1, max=2000)])
     rating = IntegerField('rating', validators=[DataRequired(), NumberRange(min=1, max=5)])
+
+
+class SearchForm(FlaskForm):
+    search = StringField('search', validators=[DataRequired()])

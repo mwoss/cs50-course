@@ -1,7 +1,10 @@
-
-
 {% extends "layout.html" %}
 
 {% block main %}
-
+    <form action="{{ url_for('search') }}" method="post">
+        {% from "_forms.html" import render_search_field %}
+        {{ form.csrf_token }}
+        {{ render_search_field(form.search) }}
+        <input type="submit"  hidden>
+    </form>
 {% endblock %}
