@@ -33,26 +33,29 @@
           }
         }
       }
-      .btn {
-        border: 2px solid transparent;
-        background: #584a9f;
-        color: #ffffff;
-        font-size: 16px;
-        line-height: 25px;
-        padding: 10px 0;
-        text-decoration: none;
-        text-shadow: none;
-        border-radius: 3px;
-        box-shadow: none;
-        transition: 0.25s;
-        display: block;
-        width: 250px;
-        margin: 30px auto 0 auto;
+      .submit {
+        .btn {
+          border: 2px solid transparent;
+          background: #584a9f;
+          color: #ffffff;
+          font-size: 16px;
+          line-height: 25px;
+          padding: 10px 0;
+          text-decoration: none;
+          text-shadow: none;
+          border-radius: 3px;
+          box-shadow: none;
+          transition: 0.25s;
+          display: block;
+          width: 250px;
+          margin: 20px auto 0 auto;
 
-        &:hover{
-          background: #3c336d;
+          &:hover {
+            background: #3c336d;
+          }
         }
       }
+
     }
   }
 
@@ -60,5 +63,6 @@
     color: $init-text-color;
     margin-bottom: 20px;
   }
+
 }
 

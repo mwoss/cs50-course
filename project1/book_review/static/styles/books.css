@@ -1,3 +1,68 @@
-
+.outer h3 {
+  margin-bottom: 50px;
+  font-family: sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  text-shadow: 2px 2px 5px rgba(33, 33, 33, 0.5);
+  color: #e4e4e4;
+}
+.outer h4 {
+  margin-top: 30px;
+}
+.outer .form-control {
+  font-size: 0.9rem;
+  background-color: #e4e4e4;
+  text-align: center;
+}
+.outer .form-control:focus {
+  border-color: #443c5f;
+  background-color: #eeeeee;
+  box-shadow: 0 0 0 0.2rem rgba(56, 47, 122, 0.22);
+}
+.outer .book-info {
+  padding-left: 150px;
+  padding-right: 150px;
+  margin-bottom: 70px;
+}
+.outer .comment-block {
+  border-top: solid #443c5f;
+  border-width: 2px;
+  padding-top: 10px;
+}
+.outer .comment-block .reviews {
+  width: 600px;
+  margin: 50px auto;
+  text-align: left;
+}
+.outer .comment-block .review-form {
+  margin: 20px auto;
+  padding: 10px;
+  position: relative;
+  width: 600px;
+  border-radius: 5px;
+  background-color: #4d4d62;
+}
+.outer .comment-block .review-form fieldset {
+  margin-bottom: 0;
+}
+.outer .comment-block .review-form .comment-area {
+  margin: 0;
+  font-size: 10px;
+}
+.outer .comment-block .review-form .comment-area .form-control {
+  height: 100px;
+}
+.outer .comment-block .review-form .rating-area {
+  margin: 0 0 5px 0;
+  width: 60px;
+  float: right;
+}
+.outer .comment-block .review-form .rating-area .form-control {
+  height: 35px;
+}
+.outer .comment-block .review-form .submit {
+  margin: 0;
+  display: none;
+}
 
 /*# sourceMappingURL=books.css.map */

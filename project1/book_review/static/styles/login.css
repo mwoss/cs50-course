@@ -29,7 +29,7 @@
   border: 2px solid #444c6c;
   box-shadow: none;
 }
-.login .login-screen .login-form .btn {
+.login .login-screen .login-form .submit .btn {
   border: 2px solid transparent;
   background: #584a9f;
   color: #ffffff;
@@ -43,9 +43,9 @@
   transition: 0.25s;
   display: block;
   width: 250px;
-  margin: 30px auto 0 auto;
+  margin: 20px auto 0 auto;
 }
-.login .login-screen .login-form .btn:hover {
+.login .login-screen .login-form .submit .btn:hover {
   background: #3c336d;
 }
 .login .app-title {

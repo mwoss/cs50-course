@@ -38,10 +38,12 @@ class Users(db.Model):
 
 class Reviews(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
-    book_isbn = db.Column('book_isbn', db.String(13), unique=True, index=True, nullable=False)
+    book_isbn = db.Column('book_isbn', db.String(13), db.ForeignKey('books.isbn'),
+                          unique=True, index=True, nullable=False)
     rating = db.Column('rating', db.Integer, nullable=False)
     review = db.Column('review', db.String(2000), nullable=False)
-    reviewer = db.Column('reviewer', db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    reviewer = db.Column('reviewer', db.Integer, db.ForeignKey('users.user_id'), nullable=False, unique=True,
+                         index=True)
 
     def __init__(self, book_isbn, rating, review, reviewer):
         self.book_isbn = book_isbn

@@ -1,6 +1,6 @@
-from json import dumps
+from os import environ
 
-from flask import render_template, redirect, request, url_for, g, flash
+from flask import render_template, redirect, request, url_for, g, flash, jsonify
 from flask_login import current_user, logout_user, login_required, login_user
 from requests import get as r_get
 from sqlalchemy.exc import DatabaseError, IntegrityError
@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash as hash_pswd
 from book_review import app, lm, db
 from book_review.forms import LoginForm, RegisterForm, ReviewForm, SearchForm
 from book_review.models import Reviews, Users, Books
-from book_review.consts import GOODREAD_URL, BOOK_PER_SEARCH
+from book_review.consts import GOODREAD_URL, BOOK_PER_SEARCH, GOODREAD_API
 
 
 @app.route('/')
@@ -70,16 +70,15 @@ def search():
     return render_template('search.html', form=form)
 
 
-@app.route('/search/<string:query>/<int:page>', methods=['GET'])
 @app.route('/search/<string:query>', methods=['GET'])
 @login_required
-def search_result(query: str, page: int = 1):
+def search_result(query: str):
+    page = request.args.get('page', 1, type=int)
     search_res = Books.query \
-        .paginate(page, BOOK_PER_SEARCH, False) \
-        .filter(Books.title.ilike(query + '%') | Books.title == query)\
-        .items
+        .filter((Books.title.ilike('%' + query + '%')) | (Books.isbn == query)) \
+        .paginate(page, BOOK_PER_SEARCH, False)
 
-    return render_template('search_result.html', query=query, search=search_res)
+    return render_template('search_result.html', query=query, books=search_res)
 
 
 @app.route('/book/<string:isbn>', methods=['GET', 'POST'])
@@ -98,10 +97,10 @@ def book_info(isbn: int):
             except IntegrityError:
                 db.session.rollback()
                 flash("Sorry, but you can write 1 comment per book")
-            except DatabaseError:
+            except ArithmeticError:
                 flash("Ups our database have bad mood today :< Sorry")
 
-    book = Books.query.filter_by(isbn=isbn).first()
+    book = get_book_data(isbn)
     reviews = Reviews.query.filter_by(book_isbn=isbn).all()
 
     return render_template('book.html', book=book, reviews=reviews, form=form)
@@ -109,18 +108,7 @@ def book_info(isbn: int):
 
 @app.route('/api/<string:isbn>', methods=['GET'])
 def api_book_info(isbn: str):
-    good_reads = r_get(GOODREAD_URL, params={'key': '1qwurMZhALuIv9amyXAg', 'isbns': isbn})
-
-    if good_reads.status_code != 200:
-        return dumps({
-            'error_message': "Internal error"
-        })
-
-    book = Books.get_as_dict(isbn=isbn)
-    return dumps({
-        **book,
-        **good_reads.json()['books'][0]
-    })
+    return jsonify(get_book_data(isbn))
 
 
 @lm.user_loader
@@ -131,3 +119,20 @@ def load_user(id: str):
 @app.before_request
 def before_request():
     g.user = current_user
+
+
+def get_book_data(isbn):
+    good_reads = r_get(GOODREAD_URL, params={'key': environ['GOODREAD_KEY'], 'isbns': isbn})
+
+    if good_reads.status_code != 200:
+        return {
+            'error_message': "Internal error"
+        }
+
+    book = Books.get_as_dict(isbn=isbn)
+    good_reads = good_reads.json()['books'][0]
+    filtered_data = {key: good_reads[key] for key in GOODREAD_API}
+    return {
+        **book,
+        **filtered_data
+    }

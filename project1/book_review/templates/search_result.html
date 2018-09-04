@@ -1,26 +1,26 @@
+<link rel="stylesheet" href="../static/styles/search.css" type="text/css">
+
 {% extends "layout.html" %}
 
 {% block main %}
-    <h5>Search result for query: {{ query }}</h5>
-    {% from "_search_res.html" import book_anchor %}
-    {% for book in result %}
-        {{ book_anchor(book) }}
-    {% endfor %}
+    <div class="search-outer">
+        <h5>Search result for query: {{ query }}</h5>
+        {% from "_search_res.html" import book_anchor %}
+        {% for book in books.items %}
+            {{ book_anchor(book) }}
+        {% endfor %}
 
-    <div class="next-prev">
-        {% if result.has_prev %}
-            <a href="{{ url_for('search_result', query=query, page=result.prev_num) }}">
-                &lt;&lt; Newer posts
-            </a>
-        {% else %}
-            &lt;&lt; Newer posts
-        {% endif %} |
-        {% if result.has_next %}
-            <a href="{{ url_for('search_result', query=query, page=posts.next_num) }}">
-                Older posts &gt;&gt;
-            </a>
-        {% else %}
-            Older posts &gt;&gt;
-        {% endif %}
+        <div class="next-prev">
+            {% if books.has_prev %}
+                <a class="btn btn-outline-info mb-4 n-btn" href="{{ url_for('search_result', query=query, page=books.prev_num) }}">
+                    Previous page
+                </a>
+            {% endif %}
+            {% if books.has_next %}
+                <a class="btn btn-outline-info mb-4 n-btn" href="{{ url_for('search_result', query=query, page=books.next_num) }}">
+                    Next page
+                </a>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

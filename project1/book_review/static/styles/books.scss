@@ -1,15 +1,86 @@
-.book-info{
+@import "consts";
 
+.outer {
+
+  h3 {
+    margin-bottom: 50px;
+    font-family: sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    text-shadow: 2px 2px 5px rgba(33, 33, 33, 0.5);
+    color: $important-color;
+
+  }
+
+  h4{
+    margin-top: 30px;
+  }
+  .form-control {
+    font-size: 0.9rem;
+    background-color: $important-color;
+    text-align: center;
+
+    &:focus {
+      border-color: $border-focus;
+      background-color: $border-bg-color;
+      box-shadow: 0 0 0 0.2rem rgba(56, 47, 122, 0.22);
+    }
+  }
+
+  .book-info {
+    padding-left: 150px;
+    padding-right: 150px;
+    margin-bottom: 70px;
+  }
+
+  .comment-block {
+    border-top: solid $border-focus;
+    border-width: 2px;
+    padding-top: 10px;
+    .reviews {
+      width: 600px;
+      margin: 50px auto;
+      text-align: left;
+    }
+
+    .review-form {
+      margin: 20px auto;
+      padding: 10px;
+      position: relative;
+      width: 600px;
+      border-radius: 5px;
+      background-color: $comment-color;
+
+      fieldset {
+        margin-bottom: 0;
+      }
+
+      .comment-area {
+        margin: 0;
+        font-size: 10px;
+        .form-control {
+          height: 100px;
+        }
+      }
+
+      .rating-area {
+        margin: 0 0 5px 0;
+        width: 60px;
+        float: right;
+
+        .form-control {
+          height: 35px;
+
+        }
+      }
+
+      .submit {
+        margin: 0;
+        display: none;
+      }
+    }
+  }
 }
 
-.reviews{
 
-}
 
-.review-form{
-
-}
-
-.comment-block{
-
-}

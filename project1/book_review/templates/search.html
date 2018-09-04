@@ -1,10 +1,20 @@
+<link rel="stylesheet" href="../static/styles/search.css" type="text/css">
+
+
 {% extends "layout.html" %}
 
 {% block main %}
     <form action="{{ url_for('search') }}" method="post">
         {% from "_forms.html" import render_search_field %}
         {{ form.csrf_token }}
-        {{ render_search_field(form.search) }}
-        <input type="submit"  hidden>
+        <fieldset class="form-group">
+            <div class="form-group search-area">
+                {{ form.search(class="form-control",
+                 placeholder="Find book by title or isbn") }}
+            </div>
+        </fieldset>
+        <div class="form-group submit">
+            {{ form.submit(class="btn btn-prmiary") }}
+        </div>
     </form>
 {% endblock %}

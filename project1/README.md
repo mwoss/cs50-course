@@ -5,6 +5,26 @@ Second project from cs50 course - book review website.
 
 I've bent project's requirements a little bit. Yes, I' ve used ORM(but some things are done with pure SQL), because I am familiar with SQL and i want to lear Flask and its extensions more.   
 Additional and not necessary library used for import script - psycopg2 it also used only for learning purpose :) 
+  
+#### How to run app:
+Before run install all of the requirements.  
+Provide environmental variables: goodread key (env: GOODREAD_KEY) and path to 
+flask config (env: FLASK_CONFIG) with SECRET_KEY and SQLALCHEMY_DATABASE_URI
+
+Example flask config:
+```angular2html
+>> cat config_file.cfg
+
+import os
+
+BASEDIR = os.path.abspath(os.path.dirname(__file__))
+TOP_LEVEL_DIR = os.path.abspath(os.curdir)
+
+DEBUG=True
+SQLALCHEMY_DATABASE_URI='YOUR_URI'
+SECRET_KEY='YOUR_KEY'
+```
+For import script create yaml file with keys: postgresql: {host, port, database, user, password}
 
 ###### Overview:
 ```angular2html

@@ -15,38 +15,45 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-
-    {% if book %}
-        <h3>{{ book.title }}</h3>
-        <div class="book-info">
-            <p>Book isbn: {{ book.isbn }}</p>
-            <p>Author: {{ book.author }}</p>
-            <p>Publication year: {{ book.publication_year }}</p>
-        </div>
-        <div class="comment-block">
-            <form action="{{ url_for('book_info', isbn=book.isbn) }}" method="post">
-                <div class="review-form">
-                    {{ form.csrf_token }}
-                    <div class="form-group">
-                        <input type="number" class="form-control" id="rating" name="rating"
-                               placeholder="5" min="1" max="5" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="review" name="review"
-                               placeholder="Give this book a review" required >
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
-
-            <div class="reviews">
-                {% for review in reviews %}
-                    <b>User {{ review.reviewer }} review:</b>
-                    {{ review.review }}
-                {% endfor %}
+    <div class="outer">
+        {% if book %}
+            <h3>{{ book.title }}</h3>
+            <div class="book-info">
+                <p>{{ book.title }} written by <b>{{ book.author }}</b> in {{ book.publication_year }}</p>
+                <p>Book ISBN: <b>{{ book.isbn }}</b></p>
+                <p>Good reads data: Reviews count: {{ book.reviews_count }}, average
+                    rating: {{ book.average_rating }}</p>
             </div>
-        </div>
-    {% else %}
-        <h4>Ups I guess we don't have this book in our system :<</h4>
-    {% endif %}
+            <div class="comment-block">
+                <form action="{{ url_for('book_info', isbn=book.isbn) }}" method="post">
+                    <div class="review-form">
+                        {{ form.csrf_token }}
+                        <fieldset class="form-group">
+                            <div class="form-group rating-area">
+                                {{ form.rating(class="form-control") }}
+                            </div>
+                            <div class="form-group comment-area">
+                                {{ form.review(class="form-control",
+                                placeholder='Give us your thoughts about that book ;)\n Press enter to send') }}
+                            </div>
+                        </fieldset>
+                        <div class="form-group submit">
+                            {{ form.submit(class="btn btn-prmiary") }}
+                        </div>
+                    </div>
+                </form>
+                <h4>Reviews section:</h4>
+                <div class="reviews">
+                    {% for review in reviews %}
+                        <div>
+                            <b>User {{ review.reviewer }} review: </b>
+                            {{ review.review }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <h4>Ups I guess we don't have this book in our system :<</h4>
+        {% endif %}
+    </div>
 {% endblock %}

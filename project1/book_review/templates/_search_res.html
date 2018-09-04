@@ -1,7 +1,8 @@
 {% macro book_anchor(book_data) %}
-    <div>
+    <div class="single-search-res">
+        {{ book_data.title }} by {{ book_data.author }}
         <a href="{{ url_for('book_info', isbn=book_data.isbn) }}">
-            {{ book_data.title }} by {{ book_data.author }}
+            <span class="link-spanner"></span>
         </a>
     </div>
 {% endmacro %}
