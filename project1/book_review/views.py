@@ -1,5 +1,3 @@
-from os import environ
-
 from flask import render_template, redirect, request, url_for, g, flash, jsonify
 from flask_login import current_user, logout_user, login_required, login_user
 from requests import get as r_get
@@ -9,7 +7,7 @@ from werkzeug.security import generate_password_hash as hash_pswd
 from book_review import app, lm, db
 from book_review.forms import LoginForm, RegisterForm, ReviewForm, SearchForm
 from book_review.models import Review, User, Book
-from book_review.consts import GOODREAD_URL, BOOK_PER_SEARCH, GOODREAD_API
+from book_review.consts import GOODREAD_URL, BOOK_PER_SEARCH, GOODREAD_API, GOODREAD_KEY
 
 
 @app.route('/')
@@ -122,7 +120,7 @@ def before_request():
 
 
 def get_book_data(isbn):
-    good_reads = r_get(GOODREAD_URL, params={'key': environ['GOODREAD_KEY'], 'isbns': isbn})
+    good_reads = r_get(GOODREAD_URL, params={'key': GOODREAD_KEY, 'isbns': isbn})
 
     if good_reads.status_code != 200:
         return {
