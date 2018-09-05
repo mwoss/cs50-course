@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash as hash_pswd
 
 from book_review import app, lm, db
 from book_review.forms import LoginForm, RegisterForm, ReviewForm, SearchForm
-from book_review.models import Reviews, Users, Books
+from book_review.models import Review, User, Book
 from book_review.consts import GOODREAD_URL, BOOK_PER_SEARCH, GOODREAD_API
 
 
@@ -24,7 +24,7 @@ def login():
 
     form = LoginForm(request.form)
     if form.validate_on_submit():
-        user = Users.query.filter_by(nick=form.username.data).first()
+        user = User.query.filter_by(nick=form.username.data).first()
         if user is None or user.check_password(form.password.data):
             flash('Username or Password is invalid', 'error')
             return redirect(url_for('login'))
@@ -43,7 +43,7 @@ def register():
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         try:
-            user = Users(nick=form.username.data, password=hash_pswd(form.password.data), email=form.email.data)
+            user = User(nick=form.username.data, password=hash_pswd(form.password.data), email=form.email.data)
             db.session.add(user)
             db.session.commit()
         except DatabaseError:
@@ -74,8 +74,8 @@ def search():
 @login_required
 def search_result(query: str):
     page = request.args.get('page', 1, type=int)
-    search_res = Books.query \
-        .filter((Books.title.ilike('%' + query + '%')) | (Books.isbn == query)) \
+    search_res = Book.query \
+        .filter((Book.title.ilike('%' + query + '%')) | (Book.isbn == query)) \
         .paginate(page, BOOK_PER_SEARCH, False)
 
     return render_template('search_result.html', query=query, books=search_res)
@@ -89,8 +89,8 @@ def book_info(isbn: int):
     if request.method == 'POST':
         if form.validate_on_submit():
             try:
-                review = Reviews(book_isbn=isbn, rating=form.rating.data, review=form.review.data,
-                                 reviewer=current_user.nick)
+                review = Review(book_isbn=isbn, rating=form.rating.data, review=form.review.data,
+                                reviewer=current_user.nick)
                 db.session.add(review)
                 db.session.commit()
                 return redirect(url_for('book_info', isbn=isbn))
@@ -101,7 +101,7 @@ def book_info(isbn: int):
                 flash("Ups our database have bad mood today :< Sorry")
 
     book = get_book_data(isbn)
-    reviews = Reviews.query.filter_by(book_isbn=isbn).all()
+    reviews = Review.query.filter_by(book_isbn=isbn).all()
 
     return render_template('book.html', book=book, reviews=reviews, form=form)
 
@@ -113,7 +113,7 @@ def api_book_info(isbn: str):
 
 @lm.user_loader
 def load_user(id: str):
-    return Users.query.get(int(id))
+    return User.query.get(int(id))
 
 
 @app.before_request
@@ -129,7 +129,7 @@ def get_book_data(isbn):
             'error_message': "Internal error"
         }
 
-    book = Books.get_as_dict(isbn=isbn)
+    book = Book.get_as_dict(isbn=isbn)
     good_reads = good_reads.json()['books'][0]
     filtered_data = {key: good_reads[key] for key in GOODREAD_API}
     return {

@@ -3,7 +3,9 @@ from werkzeug.security import check_password_hash
 from book_review import db
 
 
-class Users(db.Model):
+class User(db.Model):
+    __tablename__ = 'users'
+
     user_id = db.Column('user_id', db.Integer, primary_key=True)
     nick = db.Column('nick', db.String(30), unique=True, index=True, nullable=False)
     email = db.Column('email', db.String(50), unique=True, index=True, nullable=False)
@@ -36,7 +38,9 @@ class Users(db.Model):
         return f'<User {self.nick}>'
 
 
-class Reviews(db.Model):
+class Review(db.Model):
+    __tablename__ = 'reviews'
+
     id = db.Column('id', db.Integer, primary_key=True)
     book_isbn = db.Column('book_isbn', db.String(13), db.ForeignKey('books.isbn'),
                           unique=True, index=True, nullable=False)
@@ -55,7 +59,9 @@ class Reviews(db.Model):
         return f'<Review for book: {self.book_isbn}\n{self.username}>'
 
 
-class Books(db.Model):
+class Book(db.Model):
+    __tablename__ = 'books'
+
     id = db.Column('id', db.Integer, primary_key=True)
     isbn = db.Column('isbn', db.String(13), unique=True, index=True, nullable=False)
     author = db.Column('author', db.String(200))
@@ -73,7 +79,7 @@ class Books(db.Model):
 
     @staticmethod
     def get_as_dict(isbn: str):
-        book: Books = Books.query.filter_by(isbn=isbn).first()
+        book: Book = Book.query.filter_by(isbn=isbn).first()
 
         return {
             'isbn': book.isbn,
