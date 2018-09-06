@@ -61,8 +61,12 @@
   height: 35px;
 }
 .outer .comment-block .review-form .submit {
-  margin: 0;
-  display: none;
+  margin: 15px auto 0 auto;
+}
+.outer .comment-block .review-form .submit .btn:hover, .outer .comment-block .review-form .submit .btn:focus {
+  background-color: #eeeeee;
+  border-color: #443c5f;
+  box-shadow: 0 0 0 0.1rem rgba(56, 47, 122, 0.22);
 }
 
 /*# sourceMappingURL=books.css.map */

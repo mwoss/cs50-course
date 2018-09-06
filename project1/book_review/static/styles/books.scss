@@ -75,8 +75,13 @@
       }
 
       .submit {
-        margin: 0;
-        display: none;
+        margin: 15px auto 0 auto;
+
+        .btn:hover, .btn:focus {
+          background-color: $border-bg-color;
+          border-color: $border-focus;
+          box-shadow: 0 0 0 0.1rem rgba(56, 47, 122, 0.22);
+        }
       }
     }
   }
