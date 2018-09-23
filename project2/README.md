@@ -1,0 +1,1 @@
+This project is moved to separate repository: [Fleact-chat](https://github.com/mwoss/fleact-chat). Check it :)
